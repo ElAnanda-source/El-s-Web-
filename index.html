@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafael Ananda — Future Lawyer & Tech Innovator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
+    <style>
+        :root {
+            /* Cyberpunk Elegant Color Palette */
+            --color-bg: #0a0a14;
+            --color-bg-dark: #05050a;
+            --color-bg-light: #12121f;
+            --color-primary: #00f3ff;
+            --color-primary-glow: rgba(0, 243, 255, 0.4);
+            --color-secondary: #ff00ff;
+            --color-secondary-glow: rgba(255, 0, 255, 0.4);
+            --color-accent: #7a5af5;
+            --color-text: #f0f0f0;
+            --color-text-dim: #b0b0c0;
+            --color-border: rgba(255, 255, 255, 0.1);
+            
+            /* Typography */
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            
+            /* Animation Speeds */
+            --transition-slow: 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition-medium: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition-fast: 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+            
+            /* Effects */
+            --glass-bg: rgba(16, 18, 27, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --neon-glow: 0 0 15px var(--color-primary-glow);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+        
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-bg-dark) 0%, #0a0a1a 50%, #120827 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .loading-screen::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.03"><rect width="100" height="100" fill="none" stroke="white" stroke-width="1"/></svg>');
+            background-size: 100px;
+            opacity: 0.1;
+        }
+        
+        .loading-screen::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(10, 10, 30, 0) 0%, rgba(10, 10, 30, 0.8) 100%);
+            pointer-events: none;
+        }
+        
+        .loading-grain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" opacity="0.03"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="200" height="200" filter="url(%23noise)"/></svg>');
+            opacity: 0.15;
+            mix-blend-mode: overlay;
+        }
+        
+        .loading-content {
+            position: relative;
+            z-index: 10;
+            width: 80%;
+            max-width: 800px;
+        }
+        
+        .loading-lines {
+            margin-bottom: var(--space-lg);
+            min-height: 200px;
+        }
+        
+        .loading-line {
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            margin-bottom: var(--space-sm);
+            opacity: 0;
+            text-shadow: 0 0 5px var(--color-primary-glow);
+        }
+        
+        .loading-line span {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: bottom;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            margin-top: var(--space-xl);
+        }
+        
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            box-shadow: 0 0 10px var(--color-primary-glow);
+        }
+        
+        .progress-bar::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: white;
+            box-shadow: 0 0 10px white;
+        }
+        
+        /* Main Content */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        section {
+            padding: var(--space-xl) 0;
+            position: relative;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(10, 15, 40, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(10, 15, 40, 0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.2;
+        }
+        
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 5px var(--color-primary);
+        }
+        
+        .hero-content {
+            width: 100%;
+            max-width: 900px;
+            margin-left: 10%;
+        }
+        
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: 4.5rem;
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+            position: relative;
+        }
+        
+        .hero-title span {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: bottom;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--color-text-dim);
+            margin-bottom: var(--space-lg);
+            max-width: 700px;
+            position: relative;
+        }
+        
+        .hero-subtitle span {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: bottom;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 0;
+            transition: all var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        
+        .btn-primary {
+            background: transparent;
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+            box-shadow: var(--neon-glow);
+        }
+        
+        .btn-primary:hover {
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 25px var(--color-primary-glow);
+            transform: translateY(-3px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-text-dim);
+            border: 1px solid var(--color-border);
+        }
+        
+        .btn-secondary:hover {
+            color: var(--color-text);
+            border-color: var(--color-text-dim);
+            transform: translateY(-3px);
+        }
+        
+        .btn-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* Glass Panel Styling */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 0;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+            animation: scan-line 4s linear infinite;
+        }
+        
+        @keyframes scan-line {
+            0% {
+                top: 0;
+                opacity: 0;
+            }
+            1% {
+                opacity: 1;
+            }
+            99% {
+                opacity: 1;
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+        
+        /* About Section */
+        .about {
+            padding-top: var(--space-xl);
+        }
+        
+        .about-content {
+            padding: var(--space-xl);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: var(--space-lg);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--color-primary);
+        }
+        
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--color-text-dim);
+        }
+        
+        .about-text p {
+            margin-bottom: var(--space-md);
+        }
+        
+        .highlight {
+            color: var(--color-primary);
+            font-weight: 500;
+        }
+        
+        /* Skills Section */
+        .skills {
+            padding: var(--space-xl) 0;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+        
+        .skill-card {
+            padding: var(--space-lg);
+            transition: all var(--transition-medium);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--color-primary);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), var(--neon-glow);
+        }
+        
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+        
+        .skill-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .skill-icon {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+        
+        .skill-description {
+            color: var(--color-text-dim);
+            margin-bottom: var(--space-md);
+            flex-grow: 1;
+        }
+        
+        .skill-progress {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .progress-ring {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .progress-ring circle {
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        .progress-ring-bg {
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+        
+        .progress-ring-fill {
+            stroke: var(--color-primary);
+            stroke-dasharray: 188;
+            stroke-dashoffset: 188;
+        }
+        
+        .progress-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+        
+        /* Projects Section */
+        .projects {
+            padding: var(--space-xl) 0;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+        
+        .project-card {
+            padding: var(--space-lg);
+            transition: all var(--transition-medium);
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+            border-color: var(--color-primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 243, 255, 0.2);
+        }
+        
+        .project-title {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            color: var(--color-primary);
+        }
+        
+        .project-description {
+            color: var(--color-text-dim);
+            margin-bottom: var(--space-md);
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-xs);
+            margin-bottom: var(--space-md);
+        }
+        
+        .project-tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--color-primary);
+            font-size: 0.8rem;
+            border-radius: 0;
+        }
+        
+        .project-link {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .project-link:hover {
+            gap: 1rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: var(--space-xl) 0;
+        }
+        
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+        
+        .contact-form {
+            margin-top: var(--space-lg);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-md);
+            position: relative;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-xs);
+            color: var(--color-text-dim);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: all var(--transition-medium);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        }
+        
+        .form-input:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        textarea.form-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            margin-top: var(--space-md);
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+            flex-wrap: wrap;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--color-text-dim);
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--color-border);
+            transition: all var(--transition-medium);
+        }
+        
+        .contact-link:hover {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: var(--space-sm) 0;
+            transition: all var(--transition-medium);
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 20, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        
+        .nav-logo span {
+            color: var(--color-primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        .nav-link {
+            color: var(--color-text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            position: relative;
+            transition: all var(--transition-fast);
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--color-primary);
+        }
+        
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: all var(--transition-medium);
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: var(--space-xl) 0;
+            border-top: 1px solid var(--color-border);
+            margin-top: var(--space-xl);
+            text-align: center;
+        }
+        
+        .footer-text {
+            color: var(--color-text-dim);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .hero-content {
+                margin-left: 5%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                gap: var(--space-sm);
+            }
+            
+            .skills-grid, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Utility Classes */
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-grain"></div>
+        <div class="loading-content">
+            <div class="loading-lines" id="loadingLines">
+                <div class="loading-line" id="line1">INITIALIZING NEURAL LEGAL CORE...</div>
+                <div class="loading-line" id="line2">LOADING REGULATORY MODULES (TAX / HUMAN RIGHTS / CUSTOMARY LAW)...</div>
+                <div class="loading-line" id="line3">SYNCING BLOCKCHAIN WATCHERS...</div>
+                <div class="loading-line" id="line4">RAFAEL INTERFACE READY.</div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav hidden" id="mainNav">
+        <div class="container nav-container">
+            <a href="#" class="nav-logo">Rafael <span>Ananda</span></a>
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-grid"></div>
+            <div class="hero-particles" id="particlesContainer"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" id="heroTitle">
+                    <span>Rafael Ananda —</span>
+                    <span>Future Lawyer & Tech Innovator</span>
+                </h1>
+                <p class="hero-subtitle" id="heroSubtitle">
+                    Combining law, AI, blockchain, programming, and future energy systems.
+                </p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary" id="primaryBtn">Initiate Connection</a>
+                    <a href="#" class="btn btn-secondary" id="secondaryBtn">View Digital CV</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="glass-panel about-content">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-text">
+                    <p>I'm <span class="highlight">Rafael Ananda</span>, a law student specializing in Tax Law, Human Rights, and Customary Law, currently studying at Universitas Satyagama.</p>
+                    <p>My journey goes beyond traditional legal studies — I am committed to becoming a Future Lawyer who understands the complex relationship between law, technology, and digital ecosystems.</p>
+                    <p>Alongside my legal education, I am actively exploring:</p>
+                    <ul style="margin-left: 2rem; margin-bottom: 1.5rem;">
+                        <li><span class="highlight">Artificial Intelligence & Prompt Engineering</span></li>
+                        <li><span class="highlight">Blockchain, Crypto Trading, and Digital Asset Regulation</span></li>
+                        <li><span class="highlight">JavaScript, React, and 3D Web Interfaces (Canvas/WebGL)</span></li>
+                        <li><span class="highlight">Renewable Energy Industry and future global energy policies</span></li>
+                    </ul>
+                    <p>I aim to build a legal career that integrates strategic thinking, technological literacy, and futuristic innovation, enabling me to operate confidently in a world where digital systems and advanced technologies shape society, businesses, and law itself.</p>
+                    <p>This portfolio represents my evolution — from a law student to a tech-powered legal thinker preparing for the next era of the digital legal landscape.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <h2 class="section-title">Digital Competency Grid</h2>
+            <div class="skills-grid">
+                <!-- Legal Skills -->
+                <div class="glass-panel skill-card stagger-item">
+                    <div class="skill-header">
+                        <h3 class="skill-title">Legal Research</h3>
+                        <div class="skill-icon"><i class="fas fa-scale-balanced"></i></div>
+                    </div>
+                    <p class="skill-description">Advanced legal analysis, precedent research, and case law synthesis with digital tools.</p>
+                    <div class="skill-progress">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 64 64">
+                                <circle class="progress-ring-bg" cx="32" cy="32" r="30"></circle>
+                                <circle class="progress-ring-fill" cx="32" cy="32" r="30" data-progress="95"></circle>
+                            </svg>
+                        </div>
+                        <div class="progress-value">95%</div>
+                    </div>
+                </div>
+                
+                <div class="glass-panel skill-card stagger-item">
+                    <div class="skill-header">
+                        <h3 class="skill-title">Tax Law</h3>
+                        <div class="skill-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    </div>
+                    <p class="skill-description">Corporate & international tax regulation with focus on digital asset taxation frameworks.</p>
+                    <div class="skill-progress">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 64 64">
+                                <circle class="progress-ring-bg" cx="32" cy="32" r="30"></circle>
+                                <circle class="progress-ring-fill" cx="32" cy="32" r="30" data-progress="90"></circle>
+                            </svg>
+                        </div>
+                        <div class="progress-value">90%</div>
+                    </div>
+                </div>
+                
+                <div class="glass-panel skill-card stagger-item">
+                    <div class="skill-header">
+                        <h3 class="skill-title">JavaScript/React</h3>
+                        <div class="skill-icon"><i class="fab fa-js-square"></i></div>
+                    </div>
+                    <p class="skill-description">Modern frontend development with React, state management, and API integration.</p>
+                    <div class="skill-progress">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 64 64">
+                                <circle class="progress-ring-bg" cx="32" cy="32" r="30"></circle>
+                                <circle class="progress-ring-fill" cx="32" cy="32" r="30" data-progress="85"></circle>
+                            </svg>
+                        </div>
+                        <div class="progress-value">85%</div>
+                    </div>
+                </div>
+                
+                <div class="glass-panel skill-card stagger-item">
+                    <div class="skill-header">
+                        <h3 class="skill-title">AI Literacy</h3>
+                        <div class="skill-icon"><i class="fas fa-robot"></i></div>
+                    </div>
+                    <p class="skill-description">Prompt engineering, AI model fine-tuning, and ethical AI implementation strategies.</p>
+                    <div class="skill-progress">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 64 64">
+                                <circle class="progress-ring-bg" cx="32" cy="32" r="30"></circle>
+                                <circle class="progress-ring-fill" cx="32" cy="32" r="30" data-progress="88"></circle>
+                            </svg>
+                        </div>
+                        <div class="progress-value">88%</div>
+                    </div>
+                </div>
+                
+                <div class="glass-panel skill-card stagger-item">
+                    <div class="skill-header">
+                        <h3 class="skill-title">Blockchain</h3>
+                        <div class="skill-icon"><i class="fas fa-link"></i></div>
+                    </div>
+                    <p class="skill-description">Smart contracts, crypto regulation, decentralized systems, and digital asset management.</p>
+                    <div class="skill-progress">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 64 64">
+                                <circle class="progress-ring-bg" cx="32" cy="32" r="30"></circle>
+                                <circle class="progress-ring-fill" cx="32" cy="32" r="30" data-progress="87"></circle>
+                            </svg>
+                        </div>
+                        <div class="progress-value">87%</div>
+                    </div>
+                </div>
+                
+                <div class="glass-panel skill-card stagger-item">
+                    <div class="skill-header">
+                        <h3 class="skill-title">Critical Reasoning</h3>
+                        <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                    </div>
+                    <p class="skill-description">Analytical problem-solving, logical structuring, and strategic decision-making.</p>
+                    <div class="skill-progress">
+                        <div class="progress-ring">
+                            <svg viewBox="0 0 64 64">
+                                <circle class="progress-ring-bg" cx="32" cy="32" r="30"></circle>
+                                <circle class="progress-ring-fill" cx="32" cy="32" r="30" data-progress="96"></circle>
+                            </svg>
+                        </div>
+                        <div class="progress-value">96%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title">Hologram Data Panels</h2>
+            <div class="projects-grid">
+                <div class="glass-panel project-card stagger-item">
+                    <h3 class="project-title">3D Portfolio Experiment</h3>
+                    <p class="project-description">Interactive 3D legal portfolio using WebGL/Three.js with holographic UI elements and animated case studies.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">WebGL</span>
+                        <span class="project-tag">Three.js</span>
+                        <span class="project-tag">UI/UX</span>
+                    </div>
+                    <a href="#" class="project-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="glass-panel project-card stagger-item">
+                    <h3 class="project-title">Quantum Particle Visualizer</h3>
+                    <p class="project-description">Scientific visualization tool for legal data patterns using particle physics simulations and D3.js.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Data Viz</span>
+                        <span class="project-tag">D3.js</span>
+                        <span class="project-tag">Physics</span>
+                    </div>
+                    <a href="#" class="project-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="glass-panel project-card stagger-item">
+                    <h3 class="project-title">Crypto Market Monitoring System</h3>
+                    <p class="project-description">Real-time dashboard tracking cryptocurrency regulations, market movements, and compliance alerts.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Blockchain</span>
+                        <span class="project-tag">API</span>
+                        <span class="project-tag">React</span>
+                    </div>
+                    <a href="#" class="project-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="glass-panel project-card stagger-item">
+                    <h3 class="project-title">Legal Research Archive</h3>
+                    <p class="project-description">AI-powered legal document analysis system with natural language processing and precedent mapping.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">AI</span>
+                        <span class="project-tag">NLP</span>
+                        <span class="project-tag">Legal Tech</span>
+                    </div>
+                    <a href="#" class="project-link">View Case Study <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="glass-panel contact-container">
+                <h2 class="section-title">Secure Comm Channel</h2>
+                <p class="about-text" style="margin-bottom: var(--space-lg);">Encrypted connection ready. Use this channel for professional inquiries, collaboration proposals, or regulatory consultations.</p>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Identity</label>
+                        <input type="text" id="name" class="form-input" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="email">Contact Frequency</label>
+                        <input type="email" id="email" class="form-input" placeholder="your.email@domain.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="subject">Transmission Subject</label>
+                        <input type="text" id="subject" class="form-input" placeholder="Project inquiry / Consultation / Collaboration" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="message">Encrypted Message</label>
+                        <textarea id="message" class="form-input" placeholder="Type your secure message here..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary submit-btn">Initiate Transmission</button>
+                </form>
+                
+                <div class="contact-links">
+                    <a href="mailto:contact@rafaelananda.legal" class="contact-link">
+                        <i class="fas fa-envelope"></i> contact@rafaelananda.legal
+                    </a>
+                    <a href="#" class="contact-link">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="#" class="contact-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="#" class="contact-link">
+                        <i class="fas fa-file-pdf"></i> Digital CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2023 Rafael Ananda. All rights reserved. | Future Lawyer & Tech Innovator</p>
+            <p class="footer-text" style="margin-top: var(--space-xs); font-size: 0.8rem;">This interface is continuously evolving. Version 2.1.3</p>
+        </div>
+    </footer>
+
+    <script>
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize GSAP
+            gsap.registerPlugin(ScrollTrigger, TextPlugin);
+            
+            // Loading Screen Animation
+            const loadingScreen = document.getElementById('loadingScreen');
+            const progressBar = document.getElementById('progressBar');
+            const loadingLines = document.getElementById('loadingLines');
+            const line1 = document.getElementById('line1');
+            const line2 = document.getElementById('line2');
+            const line3 = document.getElementById('line3');
+            const line4 = document.getElementById('line4');
+            const mainNav = document.getElementById('mainNav');
+            
+            // Create loading animation timeline
+            const loadingTimeline = gsap.timeline({
+                onComplete: completeLoading
+            });
+            
+            // Animate loading lines with typewriter effect
+            loadingTimeline
+                .to(line1, { duration: 0.5, opacity: 1 })
+                .to(line1, { duration: 2, text: "INITIALIZING NEURAL LEGAL CORE...", ease: "none" })
+                .to(line2, { duration: 0.5, opacity: 1 })
+                .to(line2, { duration: 2.5, text: "LOADING REGULATORY MODULES (TAX / HUMAN RIGHTS / CUSTOMARY LAW)...", ease: "none" })
+                .to(line3, { duration: 0.5, opacity: 1 })
+                .to(line3, { duration: 2, text: "SYNCING BLOCKCHAIN WATCHERS...", ease: "none" })
+                .to(line4, { duration: 0.5, opacity: 1 })
+                .to(line4, { duration: 1.5, text: "RAFAEL INTERFACE READY.", ease: "none" });
+            
+            // Animate progress bar
+            loadingTimeline.to(progressBar, {
+                duration: 7,
+                width: "100%",
+                ease: "power2.inOut"
+            }, 0);
+            
+            // Create particles for hero section
+            function createParticles() {
+                const particlesContainer = document.getElementById('particlesContainer');
+                const particleCount = 80;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Random properties
+                    const size = Math.random() * 3 + 1;
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+                    const opacity = Math.random() * 0.7 + 0.1;
+                    const duration = Math.random() * 10 + 10;
+                    const delay = Math.random() * 5;
+                    
+                    // Apply styles
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${posX}%`;
+                    particle.style.top = `${posY}%`;
+                    particle.style.opacity = opacity;
+                    
+                    // Add to container
+                    particlesContainer.appendChild(particle);
+                    
+                    // Create floating animation
+                    gsap.to(particle, {
+                        y: Math.random() * 100 - 50,
+                        x: Math.random() * 100 - 50,
+                        duration: duration,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut",
+                        delay: delay
+                    });
+                }
+            }
+            
+            // Complete loading and reveal content
+            function completeLoading() {
+                // Add a small delay for dramatic effect
+                setTimeout(() => {
+                    // Animate loading screen out
+                    gsap.to(loadingScreen, {
+                        duration: 1,
+                        opacity: 0,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                            loadingScreen.style.display = 'none';
+                            // Show navigation
+                            mainNav.classList.remove('hidden');
+                            gsap.to(mainNav, { duration: 0.8, opacity: 1, y: 0 });
+                            
+                            // Start hero animations
+                            animateHero();
+                            initScrollAnimations();
+                            createParticles();
+                        }
+                    });
+                }, 500);
+            }
+            
+            // Animate hero section
+            function animateHero() {
+                const heroTitle = document.getElementById('heroTitle');
+                const heroSubtitle = document.getElementById('heroSubtitle');
+                const heroTitleSpans = heroTitle.querySelectorAll('span');
+                const heroSubtitleSpan = heroSubtitle.querySelector('span');
+                
+                // Animate hero title with typewriter effect
+                gsap.to(heroTitleSpans[0], {
+                    duration: 1.5,
+                    text: "Rafael Ananda —",
+                    ease: "none",
+                    delay: 0.5
+                });
+                
+                gsap.to(heroTitleSpans[1], {
+                    duration: 2,
+                    text: "Future Lawyer & Tech Innovator",
+                    ease: "none",
+                    delay: 1.8
+                });
+                
+                // Animate subtitle
+                gsap.to(heroSubtitle, {
+                    duration: 1,
+                    opacity: 1,
+                    y: 0,
+                    delay: 3.5
+                });
+                
+                // Animate CTA buttons
+                gsap.to('.hero-cta', {
+                    duration: 1,
+                    opacity: 1,
+                    y: 0,
+                    delay: 4
+                });
+            }
+            
+            // Initialize scroll animations
+            function initScrollAnimations() {
+                // Animate sections on scroll
+                const staggerItems = document.querySelectorAll('.stagger-item');
+                
+                gsap.utils.toArray(staggerItems).forEach(item => {
+                    gsap.to(item, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 80%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+                
+                // Animate skill progress rings
+                const progressRings = document.querySelectorAll('.progress-ring-fill');
+                
+                progressRings.forEach(ring => {
+                    const progress = ring.getAttribute('data-progress');
+                    const circumference = 188; // 2 * π * r (where r = 30)
+                    const offset = circumference - (progress / 100) * circumference;
+                    
+                    gsap.to(ring, {
+                        strokeDashoffset: offset,
+                        duration: 2,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: ring.parentElement.parentElement.parentElement,
+                            start: "top 70%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+                
+                // Update active nav link on scroll
+                const sections = document.querySelectorAll('section');
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                // Create scroll triggers for each section
+                sections.forEach(section => {
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: "top 50%",
+                        end: "bottom 50%",
+                        onEnter: () => updateActiveNav(section.id),
+                        onEnterBack: () => updateActiveNav(section.id)
+                    });
+                });
+                
+                function updateActiveNav(sectionId) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+                
+                // Parallax effect for hero background
+                gsap.to('.hero-grid', {
+                    yPercent: 20,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: '.hero',
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                });
+            }
+            
+            // Button ripple effect
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const x = e.clientX - e.target.getBoundingClientRect().left;
+                    const y = e.clientY - e.target.getBoundingClientRect().top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('btn-ripple');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // In a real implementation, you would send this data to a server
+                    // For this demo, we'll just show a success message
+                    const submitBtn = contactForm.querySelector('.submit-btn');
+                    const originalText = submitBtn.textContent;
+                    
+                    // Show sending state
+                    submitBtn.textContent = "ENCRYPTING & TRANSMITTING...";
+                    submitBtn.style.background = "rgba(0, 243, 255, 0.2)";
+                    
+                    // Simulate API call
+                    setTimeout(() => {
+                        // Show success state
+                        submitBtn.textContent = "TRANSMISSION SUCCESSFUL";
+                        submitBtn.style.background = "rgba(0, 200, 100, 0.2)";
+                        submitBtn.style.borderColor = "#00c864";
+                        submitBtn.style.color = "#00c864";
+                        
+                        // Reset form
+                        contactForm.reset();
+                        
+                        // Reset button after 3 seconds
+                        setTimeout(() => {
+                            submitBtn.textContent = originalText;
+                            submitBtn.style.background = "";
+                            submitBtn.style.borderColor = "";
+                            submitBtn.style.color = "";
+                        }, 3000);
+                    }, 2000);
+                });
+            }
+            
+            // Add mouse tilt effect to project cards
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateY = (x - centerX) / 25;
+                    const rotateX = (centerY - y) / 25;
+                    
+                    gsap.to(this, {
+                        duration: 0.5,
+                        rotateX: rotateX,
+                        rotateY: rotateY,
+                        transformPerspective: 1000,
+                        ease: "power2.out"
+                    });
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    gsap.to(this, {
+                        duration: 0.7,
+                        rotateX: 0,
+                        rotateY: 0,
+                        ease: "power3.out"
+                    });
+                });
+            });
+            
+            // Add hover effects to skill cards
+            document.querySelectorAll('.skill-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    gsap.to(this, {
+                        duration: 0.3,
+                        boxShadow: "0 15px 30px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 243, 255, 0.3)",
+                        ease: "power2.out"
+                    });
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    gsap.to(this, {
+                        duration: 0.3,
+                        boxShadow: "var(--glass-shadow)",
+                        ease: "power2.out"
+                    });
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
